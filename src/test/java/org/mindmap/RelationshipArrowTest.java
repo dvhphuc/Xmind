@@ -26,7 +26,6 @@ class RelationshipArrowTest {
     }
 
 
-
     @Test
     void testSetNameRelationship() {
         RelationshipArrow relationshipArrowMaintopic1Maintopic2 = createRelationship();
@@ -48,14 +47,34 @@ class RelationshipArrowTest {
         centralTopic.appendChild(mainTopic2);
         centralTopic.appendChild(mainTopic3);
 
-        var relationshipExample = new RelationshipArrow(mainTopic1,mainTopic2);
+        var relationshipExample = new RelationshipArrow(mainTopic1, mainTopic2);
         relationshipExample.setHead(mainTopic3);
 
-        assertEquals("Main Topic 3",relationshipExample.getHead().getTitle());
+        assertEquals("Main Topic 3", relationshipExample.getHead().getTitle());
 
         relationshipExample.setTail(mainTopic2);
 
-        assertEquals("Main Topic 2",relationshipExample.getTail().getTitle());
+        assertEquals("Main Topic 2", relationshipExample.getTail().getTitle());
+    }
+
+    @Test
+    void testRelationshipArrowToCentral() {
+        var centralTopic = new CentralTopic("Central Topic");
+        var mainTopic1 = new Topic("Main Topic 1");
+        var mainTopic2 = new Topic("Main Topic 2");
+
+        centralTopic.appendChildren(mainTopic1, mainTopic2);
+
+        var r = new RelationshipArrow(mainTopic1, mainTopic2);
+
+        centralTopic.addRelationshipArrow(r);
+
+        assertEquals(1, centralTopic.getRelationshipArrows().size());
+
+        centralTopic.removeRelationshipArrow(r);
+
+        assertEquals(0, centralTopic.getRelationshipArrows().size());
+
     }
 
 }

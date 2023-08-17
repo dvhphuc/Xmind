@@ -13,6 +13,16 @@ public class CentralTopic extends Topic {
 
     List<Topic> floatingTopics = new ArrayList();
 
+    public List<RelationshipArrow> getRelationshipArrows() {
+        return relationshipArrows;
+    }
+
+    public void setRelationshipArrows(List<RelationshipArrow> relationshipArrows) {
+        this.relationshipArrows = relationshipArrows;
+    }
+
+    List<RelationshipArrow> relationshipArrows = new ArrayList();
+
     public List<Topic> getFloatingTopics() {
         return floatingTopics;
     }
@@ -56,12 +66,15 @@ public class CentralTopic extends Topic {
         subTopic.appendChild(floatingTopic);
         floatingTopic.parentTopic = subTopic;
     }
+
+    void addRelationshipArrow(RelationshipArrow r) {
+        this.relationshipArrows.add(r);
+    }
+
+    void removeRelationshipArrow(RelationshipArrow r) {
+        this.relationshipArrows.remove(r);
+    }
 }
-
-
-
-
-
 
 
 //    void TraversalFloating(List<Topic> floatingTopicstopics) {
@@ -87,7 +100,6 @@ public class CentralTopic extends Topic {
 //            }
 //        }
 //    }
-
 
 
 //

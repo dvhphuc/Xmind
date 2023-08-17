@@ -28,7 +28,7 @@ class CentralTopicTest {
         Topic mainTopic4 = new Topic("Main Topic 4");
         centralTopic.appendChildren(mainTopic1, mainTopic2, mainTopic3, mainTopic4);
 
-       // System.out.print(mainTopic1.positionToTheCentralTopic + mainTopic2.positionToTheCentralTopic + mainTopic3.positionToTheCentralTopic + mainTopic4.positionToTheCentralTopic);
+        // System.out.print(mainTopic1.positionToTheCentralTopic + mainTopic2.positionToTheCentralTopic + mainTopic3.positionToTheCentralTopic + mainTopic4.positionToTheCentralTopic);
         assertEquals(4, centralTopic.getChildren().size());
     }
 
@@ -224,7 +224,7 @@ class CentralTopicTest {
 
         mainTopic1.appendChild(subTopic1);
 
-        centralTopic.moveFloatingToSubTopic(floatingTopic,subTopic1);
+        centralTopic.moveFloatingToSubTopic(floatingTopic, subTopic1);
 
         assertEquals(0, centralTopic.getFloatingTopics().size());
 

@@ -8,6 +8,23 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 class TopicTest {
+
+    @Test
+    void removeChildById() {
+        var centralTopic = new CentralTopic("Central Topic");
+        var mainTopic1 = new Topic("Main Topic 1");
+
+        centralTopic.appendChild(mainTopic1);
+
+        var subTopic1 = new Topic("Sub Topic 1");
+
+        mainTopic1.appendChild(subTopic1);
+
+        mainTopic1.removeChild(subTopic1.getId());
+
+        assertEquals(0, mainTopic1.getChildren().size());
+    }
+
     @Test
     void removeChidrensById() {
         var centralTopic = new CentralTopic("Central Topic");
@@ -26,21 +43,5 @@ class TopicTest {
         assertEquals(0, mainTopic1.getChildren().size());
         assertEquals(1, centralTopic.getChildren().size());
     }
-    @Test
-    void removeChildById() {
-        var centralTopic = new CentralTopic("Central Topic");
-        var mainTopic1 = new Topic("Main Topic 1");
-
-        centralTopic.appendChild(mainTopic1);
-
-        var subTopic1 = new Topic("Sub Topic 1");
-
-        mainTopic1.appendChild(subTopic1);
-
-        System.out.println(subTopic1.getId());
-
-        mainTopic1.removeChild(subTopic1.getId());
-
-        assertEquals(0, mainTopic1.getChildren().size());
-    }
+}
 

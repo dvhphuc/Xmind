@@ -79,19 +79,19 @@ public class Topic {
     }
 
     public void updatePositionChild() {
-        this.children.get(this.children.size()/2).setY(  this.y - this.width/2 + GlobalProterties.width/2          );
-        for (int i=this.children.size()/2-1 ; i >= 0; ++i) {
+        this.children.get(this.children.size() / 2).setY(this.y - this.width / 2 + GlobalProterties.width / 2);
+        for (int i = this.children.size() / 2 - 1; i >= 0; ++i) {
             int indexNext = i + 1;
             this.children.get(i).setY(this.children.get(indexNext).getY() + GlobalProterties.space + GlobalProterties.width);
         }
 
-        for (int i=this.children.size()/2+1; i<this.children.size(); ++i) {
-            int indexPre = i-1;
+        for (int i = this.children.size() / 2 + 1; i < this.children.size(); ++i) {
+            int indexPre = i - 1;
             this.children.get(i).setY(this.children.get(indexPre).getY() - GlobalProterties.space - GlobalProterties.width);
         }
 
-        for (var item:children) {
-            item.setX( this.getX() - GlobalProterties.space - GlobalProterties.width);
+        for (var item : children) {
+            item.setX(this.getX() - GlobalProterties.space - GlobalProterties.width);
         }
 
     }
@@ -154,6 +154,7 @@ public class Topic {
             }
         }
     }
+
     void moveToTopic(Topic destinationTopic) {
         this.parentTopic.getChildren().remove(this);
         destinationTopic.getChildren().add(this);
@@ -162,12 +163,13 @@ public class Topic {
 
 
     void changeOrderToAbove(Topic topic) {
-        int minIndex = Math.min(this.order, topic.order);
-        int maxIndex = Math.max(this.order, topic.order);
         List<Integer> orders = new ArrayList<Integer>();
         for (var item : this.parentTopic.getChildren()) {
             orders.add(item.order);
         }
+
+        int minIndex = Math.min(this.order, topic.order);
+        int maxIndex = Math.max(this.order, topic.order);
 
         if (topic.order < this.order) {
             this.order = topic.order;
@@ -183,30 +185,21 @@ public class Topic {
     }
 
     public void removeChildren(String... topics) {
-        for (var item:topics) {
+        for (var item : topics) {
             GlobalProterties.topicsIdNeedToRemove.add(item);
         }
-        this.traversalCentralTopic();
+        this.removeTopicsInList();
     }
 
-    public void traversalCentralTopic() {
+    public void removeTopicsInList() {
         for (var item : this.children) {
-            if ( GlobalProterties.topicsIdNeedToRemove.contains(item.getId()) ) {
+            if (GlobalProterties.topicsIdNeedToRemove.contains(item.getId())) {
                 removeChild(item.getId());
                 GlobalProterties.topicsIdNeedToRemove.remove(item.getId());
             }
-            item.traversalCentralTopic();
+            item.removeTopicsInList();
         }
     }
-    void traversal() {
-        for (var item:this.children) {
-            if (GlobalProterties.topicsNeedToRemove.contains(item)) {
-                this.removeChildByObject(item);
-                GlobalProterties.topicsNeedToRemove.remove(item);
-            }
-            item.traversal();
-        }
-        return;
-    }
+
 
 }
