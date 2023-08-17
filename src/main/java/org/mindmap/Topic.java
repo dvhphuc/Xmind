@@ -139,7 +139,8 @@ public class Topic {
                 .filter(item -> item != topic)
                 .collect(Collectors.toList());
         this.children = filteredTopics;
-        for (var item : this.children) {
+        topic.setParentTopic(null);
+        for (var item : this.children) { // Reorder all of children after remove a child
             if (item.order > topic.order)
                 item.order -= 1;
         }
@@ -181,32 +182,22 @@ public class Topic {
         }
     }
 
-    public Topic findChildObjectById(String Id) {
+    public void removeChildren(String... topics) {
+        for (var item:topics) {
+            GlobalProterties.topicsIdNeedToRemove.add(item);
+        }
+        this.traversalCentralTopic();
+    }
+
+    public void traversalCentralTopic() {
         for (var item : this.children) {
-            if (item.getId() == Id) return item;
-            item.findChildObjectById(Id);
+            if ( GlobalProterties.topicsIdNeedToRemove.contains(item.getId()) ) {
+                removeChild(item.getId());
+                GlobalProterties.topicsIdNeedToRemove.remove(item.getId());
+            }
+            item.traversalCentralTopic();
         }
-        return null;
     }
-
-    void removeAllChidrensById(List<String> listIds) {
-        for (var id : listIds) {
-            var objectFindById = findChildObjectById(id);
-            GlobalProterties.topicsNeedToRemove.add(objectFindById);
-        }
-        this.traversal();
-        GlobalProterties.topicsNeedToRemove = null;
-    }
-
-//    void removeAllChildrenByObject(List<Topic> topics) { //Remove all children and multi-level subchildren of a Topic
-//        for (var topic : topics) {
-//            GlobalProterties.topicsNeedToRemove.add(topic);
-//        }
-//        //GlobalProterties.topicsNeedToRemove = Arrays.stream(topics).toList(); ////If using is converting, the topicsNeedToRmove will be a fixed-array, so cannot remove any elemtn from it
-//        this.traversal();
-//        GlobalProterties.topicsNeedToRemove = null;
-//    }
-
     void traversal() {
         for (var item:this.children) {
             if (GlobalProterties.topicsNeedToRemove.contains(item)) {
