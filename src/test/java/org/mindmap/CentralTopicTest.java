@@ -259,21 +259,21 @@ class CentralTopicTest {
 
     }
 
-//    @Test
-//    void testLeftRightTopic() {
-//        CentralTopic centralTopic = new CentralTopic("Central Topic");
-//
-//
-//
-//        var mainTopic1 = new Topic("Main Topic 1");
-//        var mainTopic2 = new Topic("Main Topic 2");
-//        var mainTopic3 = new Topic("Main Topic 3");
-//        var mainTopic4 = new Topic("Main Topic 4");
-//        var mainTopic5 = new Topic("Main Topic 5");
-//        var mainTopic6 = new Topic("Main Topic 6");
-//
-//        centralTopic.appendChilds(mainTopic1, mainTopic2, mainTopic3, mainTopic4, mainTopic5, mainTopic6);
-//
-//        assertEquals("left",mainTopic6.positionToTheCentralTopic);
-//    }
+    @Test
+    void testLeftRightTopic() {
+        CentralTopic centralTopic = new CentralTopic("Central Topic");
+
+        var mainTopic1 = new Topic("Main Topic 1");
+        var mainTopic2 = new Topic("Main Topic 2");
+        var mainTopic3 = new Topic("Main Topic 3");
+        var mainTopic4 = new Topic("Main Topic 4");
+        var mainTopic5 = new Topic("Main Topic 5");
+        var mainTopic6 = new Topic("Main Topic 6");
+
+        centralTopic.appendChildren(mainTopic1, mainTopic2, mainTopic3, mainTopic4, mainTopic5, mainTopic6);
+
+        assertEquals("left",mainTopic6.getPositionToTheCentralTopic());
+
+        assertEquals("right",mainTopic1.getPositionToTheCentralTopic());
+    }
 }

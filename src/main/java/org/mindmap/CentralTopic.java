@@ -32,8 +32,14 @@ public class CentralTopic extends Topic {
 
         topic.parentTopic = this;
         topic.order = topic.parentTopic.getChildren().size();
-//        topic.positionToTheCentralTopic = "left";
-//        this.children.get(this.children.size()/2).setPositionToTheCentralTopic("right");
+        if (this.children.size() > 4) {
+            topic.positionToTheCentralTopic = "left";
+            this.children.get(this.children.size() / 2).setPositionToTheCentralTopic("right");
+        }
+        else if (this.children.size() < 3)
+                topic.setPositionToTheCentralTopic("right");
+        else
+            topic.setPositionToTheCentralTopic("left");
         this.children.add(topic);
     }
 

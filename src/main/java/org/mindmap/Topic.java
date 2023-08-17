@@ -101,6 +101,11 @@ public class Topic {
 
     protected int order;
 
+    public void setPositionToTheCentralTopic(String postion) {
+        this.positionToTheCentralTopic = postion;
+    }
+
+
     public String getPositionToTheCentralTopic() {
         return positionToTheCentralTopic;
     }
@@ -114,13 +119,6 @@ public class Topic {
     }
 
     void appendChild(Topic topic) {
-        this.children.add(topic);
-        topic.parentTopic = this;
-        topic.order = topic.parentTopic.getChildren().size();
-        topic.positionToTheCentralTopic = this.positionToTheCentralTopic;
-    }
-
-    void appendChildById(Topic topic) {
         this.children.add(topic);
         topic.parentTopic = this;
         topic.order = topic.parentTopic.getChildren().size();
@@ -184,8 +182,8 @@ public class Topic {
         }
     }
 
-    public void removeChildren(String... topics) {
-        for (var item : topics) {
+    public void removeChildren(String... children) {
+        for (var item : children) {
             GlobalProterties.topicsIdNeedToRemove.add(item);
         }
         this.removeTopicsInList();
