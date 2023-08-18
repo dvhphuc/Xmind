@@ -78,23 +78,6 @@ public class Topic {
         this.height = height;
     }
 
-    public void updatePositionChild() {
-        this.children.get(this.children.size() / 2).setY(this.y - this.width / 2 + GlobalProterties.width / 2);
-        for (int i = this.children.size() / 2 - 1; i >= 0; ++i) {
-            int indexNext = i + 1;
-            this.children.get(i).setY(this.children.get(indexNext).getY() + GlobalProterties.space + GlobalProterties.width);
-        }
-
-        for (int i = this.children.size() / 2 + 1; i < this.children.size(); ++i) {
-            int indexPre = i - 1;
-            this.children.get(i).setY(this.children.get(indexPre).getY() - GlobalProterties.space - GlobalProterties.width);
-        }
-
-        for (var item : children) {
-            item.setX(this.getX() - GlobalProterties.space - GlobalProterties.width);
-        }
-
-    }
 
     private int width;
     private int height;
@@ -115,6 +98,7 @@ public class Topic {
     Topic(String title) {
         this.title = title;
         this.parentTopic = null;
+        this.height = 200;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -131,6 +115,10 @@ public class Topic {
         }
     }
 
+
+    void updatePositionToTheCentralTopic() {
+
+    }
 
     void removeChildByObject(Topic topic) {
         List<Topic> filteredTopics = children.stream()
@@ -186,18 +174,34 @@ public class Topic {
         for (var item : children) {
             GlobalProterties.topicsIdNeedToRemove.add(item);
         }
-        this.removeTopicsInList();
+        this.removeTopicsInListId();
     }
 
-    public void removeTopicsInList() {
+    public void removeTopicsInListId() {
         for (var item : this.children) {
             if (GlobalProterties.topicsIdNeedToRemove.contains(item.getId())) {
                 removeChild(item.getId());
                 GlobalProterties.topicsIdNeedToRemove.remove(item.getId());
             }
-            item.removeTopicsInList();
+            item.removeTopicsInListId();
         }
     }
 
+    void updatePositionOfChildren() {
+        for (var item : this.children) {
+            item.setPositionToTheCentralTopic(this.positionToTheCentralTopic);
+        }
+        return;
+    }
+
+    double caculateHeightOfLeafChild() {
+        double height = 0;
+        if (this.children.size() == 0) height = this.getHeight();
+        for (var item : this.children)
+            if (item.getChildren().size() == 0)
+                height += 70;
+            else height += item.caculateHeightOfLeafChild();
+        return height;
+    }
 
 }

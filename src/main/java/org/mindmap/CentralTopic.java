@@ -43,6 +43,39 @@ public class CentralTopic extends Topic {
         this.children.add(topic);
     }
 
+    @Override
+    void updatePositionOfChildren() {
+        double heightLeftSide = 0;
+        double heightRightSide = 0;
+        for (var item : this.children) {
+            if (item.getPositionToTheCentralTopic() == "left")
+                heightLeftSide += item.caculateHeightOfLeafChild() + item.getHeight();
+            else
+                heightRightSide += item.caculateHeightOfLeafChild() + item.getHeight();
+        }
+        if (heightRightSide - heightLeftSide > 200) {
+            for (int i = this.children.size() - 1; i >= 0; i--) {
+                var child = this.children.get(i);
+                if (child.getPositionToTheCentralTopic() == "right") {
+                    child.setPositionToTheCentralTopic("left");
+                    child.updatePositionOfChildren();
+                    break;
+                }
+            }
+        }
+        if (heightLeftSide - heightRightSide > 200) {
+            for (var item : this.children) {
+                if (item.getPositionToTheCentralTopic() == "left") {
+                    item.setPositionToTheCentralTopic("right");
+                    item.updatePositionOfChildren();
+                    break;
+                }
+            }
+        }
+
+
+    }
+
     void addFloatingTopic(Topic floatingTopic) {
         this.floatingTopics.add(floatingTopic);
         floatingTopic.parentTopic = this;
@@ -80,6 +113,8 @@ public class CentralTopic extends Topic {
     void removeRelationshipArrow(RelationshipArrow r) {
         this.relationshipArrows.remove(r);
     }
+
+
 }
 
 

@@ -276,4 +276,26 @@ class CentralTopicTest {
 
         assertEquals("right",mainTopic1.getPositionToTheCentralTopic());
     }
+
+    @Test
+    void testAddSubtopicChangeLeftRight() {
+        CentralTopic centralTopic = new CentralTopic("Central Topic");
+
+        var mainTopic1 = new Topic("Main Topic 1");
+        var mainTopic2 = new Topic("Main Topic 2");
+        var mainTopic3 = new Topic("Main Topic 3");
+        var mainTopic4 = new Topic("Main Topic 4");
+        var mainTopic5 = new Topic("Main Topic 5");
+
+        centralTopic.appendChildren(mainTopic1, mainTopic2, mainTopic3, mainTopic4, mainTopic5);
+
+        var subTopic1 = new Topic("Sub Topic 1");
+
+        assertEquals("right", mainTopic3.getPositionToTheCentralTopic());
+
+        mainTopic1.appendChild(subTopic1);
+        centralTopic.updatePositionOfChildren();
+        assertEquals("left", mainTopic3.getPositionToTheCentralTopic());
+
+    }
 }
