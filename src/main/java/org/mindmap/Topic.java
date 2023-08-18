@@ -115,11 +115,6 @@ public class Topic {
         }
     }
 
-
-    void updatePositionToTheCentralTopic() {
-
-    }
-
     void removeChildByObject(Topic topic) {
         List<Topic> filteredTopics = children.stream()
                 .filter(item -> item != topic)
@@ -170,20 +165,15 @@ public class Topic {
         }
     }
 
-    public void removeChildren(String... children) {
-        for (var item : children) {
-            GlobalProterties.topicsIdNeedToRemove.add(item);
-        }
-        this.removeTopicsInListId();
-    }
 
-    public void removeTopicsInListId() {
-        for (var item : this.children) {
-            if (GlobalProterties.topicsIdNeedToRemove.contains(item.getId())) {
-                removeChild(item.getId());
-                GlobalProterties.topicsIdNeedToRemove.remove(item.getId());
+    public void removeChildrenById(List<String> idSet) {
+        for (var child : this.children) {
+            var childId = child.getId();
+            if ( idSet.contains(childId) ) {
+                child.getParentTopic().removeChild( childId );
+                idSet.remove(childId);
             }
-            item.removeTopicsInListId();
+            child.removeChildrenById(idSet);
         }
     }
 

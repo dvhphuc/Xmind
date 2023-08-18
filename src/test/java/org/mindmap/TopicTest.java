@@ -38,7 +38,11 @@ class TopicTest {
         centralTopic.appendChild(mainTopic1);
         centralTopic.appendChild(mainTopic2);
 
-        centralTopic.removeChildren(subTopic1.getId(), mainTopic2.getId());
+        List<String> childrenToRemove = new ArrayList();
+        childrenToRemove.add(subTopic1.getId());
+        childrenToRemove.add(mainTopic2.getId());
+
+        centralTopic.removeChildrenById(childrenToRemove); // Pass a list
 
         assertEquals(0, mainTopic1.getChildren().size());
         assertEquals(1, centralTopic.getChildren().size());

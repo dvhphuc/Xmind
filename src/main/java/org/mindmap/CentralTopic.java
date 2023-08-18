@@ -32,15 +32,20 @@ public class CentralTopic extends Topic {
 
         topic.parentTopic = this;
         topic.order = topic.parentTopic.getChildren().size();
+        arrange(topic);
+        this.children.add(topic);
+    }
+
+    //void arrange //
+    void arrange(Topic topic) {
         if (this.children.size() > 4) {
             topic.positionToTheCentralTopic = "left";
             this.children.get(this.children.size() / 2).setPositionToTheCentralTopic("right");
         }
         else if (this.children.size() < 3)
-                topic.setPositionToTheCentralTopic("right");
+            topic.setPositionToTheCentralTopic("right");
         else
             topic.setPositionToTheCentralTopic("left");
-        this.children.add(topic);
     }
 
     @Override
@@ -72,8 +77,6 @@ public class CentralTopic extends Topic {
                 }
             }
         }
-
-
     }
 
     void addFloatingTopic(Topic floatingTopic) {
@@ -116,54 +119,3 @@ public class CentralTopic extends Topic {
 
 
 }
-
-
-//    void TraversalFloating(List<Topic> floatingTopicstopics) {
-//
-//        for (var item:this.getChildren()) {
-//            if (floatingTopicstopics.contains(item)) {
-//                this.removeChild(item);
-//                //topics.remove(item);
-//            }
-//            item.Traversal(floatingTopicstopics);
-//        }
-//    }
-//
-//    void removeFloatingTopics(Topic... floatingTopics) {
-//        var needToRemoveTopics = Arrays.stream(floatingTopics).toList();
-//        for (var item : floatingTopics) {
-//            item.Traversal(needToRemoveTopics);
-//        }
-//        this.TraversalFloating(needToRemoveTopics);
-//        for (var item: floatingTopics) {
-//            if (needToRemoveTopics.contains(item)) {
-//                item.parentTopic.removeChild(item);
-//            }
-//        }
-//    }
-
-
-//
-//    List<RelationshipArrow> relationshipArrows = new ArrayList();
-//    void addRelationship(Topic _head, Topic _tail) {
-//        relationshipArrows.add(new RelationshipArrow(_head, _tail));
-//    }
-//    void changeHeadRelationshipArrow(RelationshipArrow r,Topic _head) {
-//        r.setHead(_head);
-//    }
-//    void changeTailRelationshipArrow(RelationshipArrow r,Topic _tail) {
-//        r.setTail(_tail);
-//    }
-
-//        Topic mainTopic1 = new Topic("Main Topic 1");
-//        Topic mainTopic2 = new Topic("Main Topic 2");
-//        Topic mainTopic3 = new Topic("Main Topic 3");
-//        Topic mainTopic4 = new Topic("Main Topic 4");
-//        mainTopic1.setPositionToTheCentralTopic("right");
-//        mainTopic2.setPositionToTheCentralTopic("right");
-//        mainTopic3.setPositionToTheCentralTopic("left");
-//        mainTopic4.setPositionToTheCentralTopic("left");
-//        this.getChildren().add(mainTopic1);
-//        this.getChildren().add(mainTopic2);
-//        this.getChildren().add(mainTopic3);
-//        this.getChildren().add(mainTopic4);

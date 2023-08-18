@@ -295,6 +295,7 @@ class CentralTopicTest {
 
         mainTopic1.appendChild(subTopic1);
         centralTopic.updatePositionOfChildren();
+
         assertEquals("left", mainTopic3.getPositionToTheCentralTopic());
 
     }
