@@ -13,6 +13,8 @@ public class CentralTopic extends Topic {
 
     List<Topic> floatingTopics = new ArrayList();
 
+    private static final int spaceGap = 200;
+
     public List<RelationshipArrow> getRelationshipArrows() {
         return relationshipArrows;
     }
@@ -32,12 +34,11 @@ public class CentralTopic extends Topic {
 
         topic.parentTopic = this;
         topic.order = topic.parentTopic.getChildren().size();
-        arrange(topic);
+        arrangeChildren(topic);
         this.children.add(topic);
     }
-
-    //void arrange //
-    void arrange(Topic topic) {
+    
+    void arrangeChildren(Topic topic) {
         if (this.children.size() > 4) {
             topic.positionToTheCentralTopic = "left";
             this.children.get(this.children.size() / 2).setPositionToTheCentralTopic("right");
@@ -58,7 +59,7 @@ public class CentralTopic extends Topic {
             else
                 heightRightSide += item.caculateHeightOfLeafChild() + item.getHeight();
         }
-        if (heightRightSide - heightLeftSide > 200) {
+        if (heightRightSide - heightLeftSide > spaceGap) {
             for (int i = this.children.size() - 1; i >= 0; i--) {
                 var child = this.children.get(i);
                 if (child.getPositionToTheCentralTopic() == "right") {
@@ -68,7 +69,7 @@ public class CentralTopic extends Topic {
                 }
             }
         }
-        if (heightLeftSide - heightRightSide > 200) {
+        if (heightLeftSide - heightRightSide > spaceGap) {
             for (var item : this.children) {
                 if (item.getPositionToTheCentralTopic() == "left") {
                     item.setPositionToTheCentralTopic("right");
